@@ -1,5 +1,7 @@
 Circular saw for easy crafting of stairplus-nodes (includes glue for recycling) by Sokomine
 
+Depends on stairsplus (after all what it offers are stairsplus-nodes!)
+
 Craft: Place eight cobblestone stairs in the way you would place things for a furnace or normal chest.
        For the shared locked version, place a circular saw and a lock next to each other in the crafting grid.
 

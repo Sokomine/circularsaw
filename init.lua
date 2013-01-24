@@ -11,6 +11,20 @@ circularsaw.known_stairs = {}
 for i,v in ipairs( {"wood","stone","cobble","mossycobble","brick","sandstone","steelblock","desert_stone","glass"} ) do
    table.insert( circularsaw.known_stairs, "default:"..v );
 end
+
+if( minetest.get_modpath("technic") ~= nil ) then
+
+   -- technic has its own stairs
+   for i,v in ipairs( {"concrete", "marble", "marble_bricks", "granite", "obsidian"} ) do
+      table.insert( circularsaw.known_stairs, "technic:"..v );
+   end
+
+else
+
+   -- add a copy of the screwdriver from RealBadAngels technic mod
+   dofile(minetest.get_modpath("circularsaw").."/technic_screwdriver.lua");
+end
+
    
 -- how many microblocks does this shape at the output inventory cost?
 circularsaw.cost_in_microblocks = { 6, 4, 7, 2, 1, 3, 3,
@@ -124,10 +138,8 @@ circularsaw.update_inventory = function( pos, amount )
    -- display as many full blocks as possible
    inv:set_list("input",  { modname.. ":" .. material .. " "..math.floor(    (akt + amount) / 8 ) });
 
--- TODO: not really optimal
-   if( modname == "default" ) then
-      modname = "stairsplus";
-   end
+   -- the stairnodes themshelves come frome stairsplus - regardless of their original full blocks
+   modname = "stairsplus";
 
    --print("circularsaw set to "..modname.." : "..material.." with "..(akt+amount).." microblocks.");
 
@@ -290,8 +302,30 @@ end,
 
 minetest.register_node("circularsaw:circularsaw", {
         description = "circular saw",
-        tiles = {"default_furnace_top.png", "default_furnace_bottom.png", "default_furnace_side.png",
-                "default_furnace_side.png", "default_furnace_side.png", "default_furnace_front.png"},
+
+        drawtype = "nodebox",
+        node_box = {
+            type = "fixed",
+            fixed = {
+                {-0.4, -0.5, -0.4, -0.25, 0.25, -0.25}, --leg
+                {0.25, -0.5, 0.25, 0.4, 0.25, 0.4}, --leg
+                {-0.4, -0.5, 0.25, -0.25, 0.25, 0.4}, --leg 
+                {0.25, -0.5, -0.4, 0.4, 0.25, -0.25}, --leg
+                {-0.5, 0.25, -0.5, 0.5, 0.375, 0.5}, --table top
+                {-0.01, 0.4375, -0.125, 0.01, 0.5, 0.125}, --saw blade (top)
+                {-0.01, 0.375, -0.1875, 0.01, 0.4375, 0.1875}, --saw blade (bottom)
+                {-0.25, -0.0625, -0.25, 0.25, 0.25, 0.25}, --motor case
+            },
+        },
+        selection_box = {
+            type = "regular",
+        },
+        inventory_image = "circularsaw.png",
+        tiles = {"circularsaw_top.png", "circularsaw_bottom.png", "circularsaw_side.png"},
+
+        paramtype = "light",
+        is_ground_content = true,
+
         paramtype2 = "facedir",
         groups = {cracky=2},
         legacy_facedir_simple = true,
@@ -377,8 +411,30 @@ if( minetest.get_modpath("locks") ~= nil ) then
 
    minetest.register_node("circularsaw:circularsaw_shared", {
         description = "shared locked circular saw",
-        tiles = {"default_furnace_top.png", "default_furnace_bottom.png", "default_furnace_side.png",
-                "default_furnace_side.png", "default_furnace_side.png", "default_furnace_front.png"},
+
+        drawtype = "nodebox",
+        node_box = {
+            type = "fixed",
+            fixed = {
+                {-0.4, -0.5, -0.4, -0.25, 0.25, -0.25}, --leg
+                {0.25, -0.5, 0.25, 0.4, 0.25, 0.4}, --leg
+                {-0.4, -0.5, 0.25, -0.25, 0.25, 0.4}, --leg 
+                {0.25, -0.5, -0.4, 0.4, 0.25, -0.25}, --leg
+                {-0.5, 0.25, -0.5, 0.5, 0.375, 0.5}, --table top
+                {-0.01, 0.4375, -0.125, 0.01, 0.5, 0.125}, --saw blade (top)
+                {-0.01, 0.375, -0.1875, 0.01, 0.4375, 0.1875}, --saw blade (bottom)
+                {-0.25, -0.0625, -0.25, 0.25, 0.25, 0.25}, --motor case
+            },
+        },
+        selection_box = {
+            type = "regular",
+        },
+        inventory_image = "circularsaw.png",
+        tiles = {"circularsaw_top.png", "circularsaw_bottom.png", "circularsaw_side.png"},
+
+        paramtype = "light",
+        is_ground_content = true,
+
         paramtype2 = "facedir",
         groups = {cracky=2},
         legacy_facedir_simple = true,

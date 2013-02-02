@@ -1,4 +1,3 @@
-
 circularsaw = {};
 
 
@@ -138,8 +137,11 @@ circularsaw.update_inventory = function( pos, amount )
    -- display as many full blocks as possible
    inv:set_list("input",  { modname.. ":" .. material .. " "..math.floor(    (akt + amount) / 8 ) });
 
-   -- the stairnodes themshelves come frome stairsplus - regardless of their original full blocks
-   modname = "stairsplus";
+   --compatibility to non stairsplus stairs
+   -- try if there a node named modname:stair_matirial exists, and if not set the modname to stairsplus
+   if(minetest.registered_nodes[modname..":stair_"..material] == nil) then 
+      modname = "stairsplus";  
+   end
 
    --print("circularsaw set to "..modname.." : "..material.." with "..(akt+amount).." microblocks.");
 

@@ -1,4 +1,3 @@
-
 circularsaw = {};
 
 
@@ -320,7 +319,6 @@ minetest.register_node("circularsaw:circularsaw", {
         selection_box = {
             type = "regular",
         },
-        inventory_image = "circularsaw.png",
         tiles = {"circularsaw_top.png", "circularsaw_bottom.png", "circularsaw_side.png"},
 
         paramtype = "light",
@@ -391,9 +389,9 @@ local STAIR = 'stairsplus:stair_cobble';
 minetest.register_craft({
         output = 'circularsaw:circularsaw',
         recipe = {
-                { STAIR, STAIR, STAIR },
-                { STAIR, "",    STAIR },
-                { STAIR, STAIR, STAIR },
+                { "",            "default:steel_ingot",  "" },
+                { "group:wood",  "default:steel_ingot",  "group:wood" },
+                { "group:wood",  "",                     "group:wood" },
         }
 })
 

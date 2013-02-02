@@ -47,7 +47,6 @@
             output = "circularsaw:screwdriver",
             recipe = {
                     {"default:steel_ingot"},
-                    {"default:steel_ingot"},
                     {"default:stick"}
             }
     })

@@ -1,4 +1,29 @@
 
+--[[
+Circular saw for easy crafting of stairplus-nodes (includes glue for recycling) by Sokomine
+
+    Copyright (C) 2013 Sokomine
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+--]]
+
+-- Version 0.2
+
+-- Changelog: 
+-- 25.09.13 Fixed a bug that led to item multiplication
+
+
 circularsaw = {};
 
 
@@ -190,6 +215,14 @@ circularsaw.allow_metadata_inventory_put = function(pos, listname, index, stack,
    -- only accept certain blocks as input which are known to be craftable into stairs
    if( listname == "input" ) then
      
+      if( not( inv:is_empty("input"))) then
+
+         local old_stack = inv:get_stack("input", 1 );
+         if( old_stack:get_name() ~= stack:get_name() ) then
+            return 0;
+         end
+      end
+
       for i,v in ipairs( circularsaw.known_stairs ) do
 
         if( circularsaw.known_stairs[ i ] == stack:get_name()) then
